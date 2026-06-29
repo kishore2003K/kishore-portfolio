@@ -16,8 +16,9 @@ export default function Home({ setPage }) {
       
       <div className="socials-left">
         <a href="https://linkedin.com/in/kishore-r03" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a>
-        <a href="https://github.com/kishore2003K" target="_blank" rel="noopener noreferrer"><i className="fab fa-github"></i></a>
-        <a href="mailto:rkishore0333@gmail.com"><i className="fas fa-envelope"></i></a>
+        <a href="https://github.com/kishore2003K" target="_blank" rel="noopener noreferrer" title="GitHub"><i className="fab fa-github"></i></a>
+        <a href="mailto:rkishore0333@gmail.com" title="Email"><i className="fas fa-envelope"></i></a>
+        <a href="/resume.html" target="_blank" rel="noopener noreferrer" title="Resume"><i className="fas fa-file-pdf"></i></a>
       </div>
 
       <i className="fas fa-yin-yang yin-yang" onClick={() => {

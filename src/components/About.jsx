@@ -20,6 +20,9 @@ export default function About() {
               <div style={{marginBottom:'10px'}}><strong>Education:</strong> ECE Engineer</div>
               <div style={{marginBottom:'10px'}}><strong>Focus:</strong> React Native, MERN</div>
               <div style={{marginBottom:'10px'}}><strong>Interests:</strong> UI/UX, Performance</div>
+              <a href="/resume.html" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: '1.5rem', padding: '10px 20px', backgroundColor: '#fff', color: '#000', textDecoration: 'none', fontWeight: 600, borderRadius: '8px', transition: 'transform 0.2s' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}>
+                <i className="fas fa-file-pdf" style={{ marginRight: '8px' }}></i> View Resume
+              </a>
             </div>
           </div>
         </div>
