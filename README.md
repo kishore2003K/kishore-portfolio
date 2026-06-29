@@ -1,22 +1,16 @@
-# Kishore R – Portfolio
+# React + Vite
 
-A single-file React portfolio built with CDN React + Babel.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## Setup
+Currently, two official plugins are available:
 
-No build step needed. Just open `index.html` in a browser.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## To deploy on Vercel / Netlify
+## React Compiler
 
-1. Drag and drop the folder into Vercel or Netlify — done.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Things to update before going live
+## Expanding the Oxlint configuration
 
-1. Replace `YOUR_USERNAME` (2 places) with your GitHub username
-2. Replace `YOUR_VERCEL_URL` with your CLIKZ live project URL
-
-## File structure
-
-kishore-portfolio/
-└── index.html   ← everything is here (React + styles + data)
-└── README.md
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
