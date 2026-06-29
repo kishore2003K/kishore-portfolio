@@ -12,129 +12,213 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0d0d0d;--bg2:#141414;--bg3:#1a1a1a;
-  --border:#2a2a2a;--border2:#333;
-  --text:#e8e8e8;--muted:#888;--dim:#555;
+  --bg:#0a0a0a;
+  --bg2:rgba(20,20,20,0.6);
+  --bg3:rgba(30,30,30,0.6);
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.15);
+  --text:#f0f0f0;--muted:#999;--dim:#666;
   --accent:#4f8ef7;--accent2:#7c6bf5;
   --green:#3dd68c;--amber:#f0a429;
-  --radius:10px;
+  --radius:16px;
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,13,13,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
-.nav-logo{font-family:'Fira Code',monospace;font-size:14px;color:var(--accent);letter-spacing:0.05em}
-.nav-links{display:flex;gap:2rem}
+/* Animated Background */
+.bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: var(--bg); pointer-events: none; }
+.bg-blob { position: absolute; filter: blur(120px); opacity: 0.35; animation: float 20s infinite ease-in-out; border-radius: 50%; }
+.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(79, 142, 247, 0.2); animation-delay: 0s; }
+.blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: rgba(124, 107, 245, 0.2); animation-delay: -5s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(5%, 5%) scale(1.05); }
+  66% { transform: translate(-5%, 2%) scale(0.95); }
+}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;transition:all 0.3s ease}
+.nav-logo{font-family:'Fira Code',monospace;font-size:15px;color:var(--text);letter-spacing:0.05em;font-weight:600;}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem}
 .nav-links a{font-size:13px;color:var(--muted);transition:color 0.2s}
 .nav-links a:hover{color:var(--text)}
 .nav-links a.active{color:var(--accent)}
 
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 2rem 4rem;text-align:center;position:relative;overflow:hidden}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.3;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
-.hero-inner{position:relative;z-index:1;max-width:680px}
-.hero-tag{display:inline-block;font-family:'Fira Code',monospace;font-size:12px;color:var(--accent);background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.25);border-radius:20px;padding:4px 14px;margin-bottom:1.5rem;letter-spacing:0.04em}
-.hero h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1rem}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 2rem 4rem;text-align:center;position:relative}
+.hero-inner{position:relative;z-index:1;max-width:700px}
+.hero-tag{display:inline-block;font-family:'Fira Code',monospace;font-size:12px;color:var(--accent);background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.25);border-radius:30px;padding:6px 18px;margin-bottom:1.5rem;letter-spacing:0.04em}
+.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1.2rem}
 .hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:1.05rem;color:var(--muted);max-width:480px;margin:0 auto 2.5rem;line-height:1.7}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{padding:10px 22px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;border:none;display:inline-flex;align-items:center;gap:8px}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:#3a7ae8;transform:translateY(-1px)}
-.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border2)}
-.btn-outline:hover{background:var(--bg3);border-color:var(--muted)}
-.hero-stats{display:flex;gap:2.5rem;justify-content:center;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--border)}
-.stat-num{font-size:1.6rem;font-weight:700;color:var(--text)}
-.stat-label{font-size:12px;color:var(--dim);margin-top:2px}
+.hero-sub{font-size:1.15rem;color:var(--muted);max-width:540px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{padding:12px 28px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);border:none;display:inline-flex;align-items:center;gap:10px}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(79,142,247,0.3)}
+.btn-primary:hover{background:#3a7ae8;transform:translateY(-2px);box-shadow:0 6px 20px rgba(79,142,247,0.4)}
+.btn-outline{background:var(--bg3);color:var(--text);border:1px solid var(--border);backdrop-filter:blur(8px)}
+.btn-outline:hover{background:rgba(255,255,255,0.05);border-color:var(--border2);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:3.5rem;justify-content:center;margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+.stat-num{font-size:1.8rem;font-weight:700;color:var(--text)}
+.stat-label{font-size:13px;color:var(--dim);margin-top:4px}
 
-section{padding:5rem 2rem;max-width:900px;margin:0 auto}
-.section-eyebrow{font-family:'Fira Code',monospace;font-size:11px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.6rem}
-.section-title{font-size:1.9rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.5rem}
-.section-sub{color:var(--muted);font-size:0.95rem;margin-bottom:3rem}
-.divider{height:1px;background:var(--border);max-width:900px;margin:0 auto}
+section{padding:6rem 2rem;max-width:900px;margin:0 auto}
+.section-eyebrow{font-family:'Fira Code',monospace;font-size:12px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;display:flex;align-items:center;gap:12px}
+.section-eyebrow::after{content:'';height:1px;background:var(--border);flex-grow:1;max-width:80px}
+.section-title{font-size:2.4rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.5rem}
+.section-sub{color:var(--muted);font-size:1.05rem;margin-bottom:4rem}
 
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1rem;font-size:0.95rem}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1.2rem;font-size:0.98rem}
 .about-text p:last-child{margin-bottom:0}
-.skills-block{display:flex;flex-direction:column;gap:16px}
-.skill-row{display:flex;flex-direction:column;gap:6px}
-.skill-label{font-size:12px;color:var(--dim);font-family:'Fira Code',monospace}
-.skill-tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:12px;padding:3px 10px;border-radius:5px;font-family:'Fira Code',monospace;background:var(--bg3);color:var(--muted);border:1px solid var(--border)}
+.skills-block{display:flex;flex-direction:column;gap:20px}
+.skill-row{display:flex;flex-direction:column;gap:10px}
+.skill-label{font-size:12px;color:var(--dim);font-family:'Fira Code',monospace;text-transform:uppercase;letter-spacing:0.05em}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:12px;padding:6px 14px;border-radius:8px;font-family:'Fira Code',monospace;background:var(--bg3);color:var(--text);border:1px solid var(--border);transition:all 0.2s}
+.tag:hover{transform:translateY(-2px);border-color:var(--border2);background:rgba(255,255,255,0.05)}
 .tag.highlight{background:rgba(79,142,247,0.1);color:var(--accent);border-color:rgba(79,142,247,0.25)}
 
-.projects-grid{display:grid;gap:1.5rem}
-.project-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:border-color 0.2s,transform 0.2s;cursor:default;position:relative;overflow:hidden}
-.project-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(79,142,247,0.04) 0%,transparent 60%);pointer-events:none}
-.project-card:hover{border-color:var(--border2);transform:translateY(-2px)}
-.project-card.featured{border-color:rgba(79,142,247,0.3)}
-.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;gap:1rem}
-.project-name{font-size:1rem;font-weight:600;letter-spacing:-0.01em}
-.project-badges{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
-.badge{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:500}
+.projects-grid{display:grid;gap:2rem}
+.project-card{border-radius:var(--radius);padding:2.5rem;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);cursor:default;position:relative;overflow:hidden;background:var(--bg2);border:1px solid var(--border);backdrop-filter:blur(16px)}
+.project-card::before{content:'';position:absolute;inset:0;background:radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);opacity:0;transition:opacity 0.4s;pointer-events:none}
+.project-card:hover::before{opacity:1}
+.project-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.3)}
+.project-card.featured{border-color:rgba(79,142,247,0.2)}
+.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.2rem;gap:1rem}
+.project-name{font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:#fff}
+.project-badges{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.badge{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:500;display:flex;align-items:center;gap:4px}
 .badge-store{background:rgba(61,214,140,0.12);color:var(--green);border:1px solid rgba(61,214,140,0.25)}
 .badge-live{background:rgba(79,142,247,0.12);color:var(--accent);border:1px solid rgba(79,142,247,0.25)}
 .badge-mern{background:rgba(124,107,245,0.12);color:var(--accent2);border:1px solid rgba(124,107,245,0.25)}
-.project-desc{font-size:0.88rem;color:var(--muted);margin-bottom:1rem;line-height:1.65}
-.project-highlights{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem}
-.highlight-item{font-size:0.83rem;color:var(--dim);display:flex;gap:8px;align-items:flex-start}
-.highlight-item::before{content:'›';color:var(--accent);flex-shrink:0;margin-top:1px}
-.project-tech{display:flex;flex-wrap:wrap;gap:5px;padding-top:1rem;border-top:1px solid var(--border)}
-.tech-pill{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--bg3);color:var(--dim);border:1px solid var(--border);font-family:'Fira Code',monospace}
+.project-desc{font-size:1rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
+.project-highlights{display:flex;flex-direction:column;gap:10px;margin-bottom:2rem}
+.highlight-item{font-size:0.9rem;color:#bbb;display:flex;gap:12px;align-items:flex-start}
+.highlight-item::before{content:'›';color:var(--accent);font-weight:700;flex-shrink:0;font-size:1rem}
+.project-tech{display:flex;flex-wrap:wrap;gap:8px;padding-top:1.5rem;border-top:1px solid var(--border)}
+.tech-pill{font-size:12px;padding:4px 12px;border-radius:8px;background:rgba(255,255,255,0.03);color:var(--text);border:1px solid var(--border);font-family:'Fira Code',monospace}
 
-.exp-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:relative}
-.exp-card::before{content:'';position:absolute;left:0;top:1.5rem;bottom:1.5rem;width:3px;background:linear-gradient(to bottom,var(--accent),var(--accent2));border-radius:0 2px 2px 0}
-.exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;padding-left:1rem}
-.exp-company{font-weight:600;font-size:1rem}
-.exp-date{font-size:12px;color:var(--dim);font-family:'Fira Code',monospace;background:var(--bg3);padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
-.exp-role{font-size:0.88rem;color:var(--accent);margin-bottom:0.75rem;padding-left:1rem}
-.exp-points{padding-left:1rem;display:flex;flex-direction:column;gap:5px}
-.exp-point{font-size:0.85rem;color:var(--muted);display:flex;gap:8px}
+.exp-card{border-radius:var(--radius);padding:2.5rem;position:relative;background:var(--bg2);border:1px solid var(--border);backdrop-filter:blur(16px)}
+.exp-card::before{content:'';position:absolute;left:0;top:2.5rem;bottom:2.5rem;width:4px;background:linear-gradient(to bottom,var(--accent),var(--accent2));border-radius:0 4px 4px 0}
+.exp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-left:1.5rem;flex-wrap:wrap;gap:1rem}
+.exp-company{font-weight:600;font-size:1.15rem;color:#fff}
+.exp-date{font-size:12px;color:var(--text);font-family:'Fira Code',monospace;background:var(--bg3);padding:4px 12px;border-radius:20px;border:1px solid var(--border)}
+.exp-role{font-size:1rem;color:var(--accent);margin-bottom:1.5rem;padding-left:1.5rem;font-weight:500}
+.exp-points{padding-left:1.5rem;display:flex;flex-direction:column;gap:12px}
+.exp-point{font-size:0.95rem;color:var(--muted);display:flex;gap:12px;line-height:1.6}
 .exp-point::before{content:'—';color:var(--dim);flex-shrink:0}
 
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;display:flex;align-items:center;gap:1rem;transition:border-color 0.2s}
-.contact-card:hover{border-color:var(--border2)}
-.contact-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.contact-label{font-size:12px;color:var(--dim);margin-bottom:2px}
-.contact-value{font-size:14px;font-weight:500;word-break:break-all}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;display:flex;align-items:center;gap:1.5rem;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);backdrop-filter:blur(16px)}
+.contact-card:hover{border-color:var(--border2);transform:translateY(-4px);background:rgba(30,30,30,0.8);box-shadow:0 12px 30px rgba(0,0,0,0.2)}
+.contact-icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;transition:transform 0.3s}
+.contact-card:hover .contact-icon{transform:scale(1.1) rotate(5deg)}
+.contact-label{font-size:12px;color:var(--dim);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;font-family:'Fira Code',monospace}
+.contact-value{font-size:15px;font-weight:500;word-break:break-all;color:var(--text)}
 
-footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--dim);font-size:12px;font-family:'Fira Code',monospace}
+footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;color:var(--dim);font-size:13px;font-family:'Fira Code',monospace}
 
-@media(max-width:640px){
-  .about-grid{grid-template-columns:1fr}
+/* Professional Reveal Animations */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+@media(max-width:768px){
+  .about-grid{grid-template-columns:1fr;gap:3rem}
   .contact-grid{grid-template-columns:1fr}
-  .nav-links{gap:1rem}
-  .hero h1{font-size:2rem}
-  .hero-stats{gap:1.5rem}
+  .nav-links{gap:1.5rem;display:none} /* Simplistic mobile handling */
+  .hero h1{font-size:2.4rem}
+  .hero-stats{gap:2rem;flex-wrap:wrap}
+  section{padding:4rem 1.5rem}
+  .project-card, .exp-card{padding:1.5rem}
+  .contact-card{padding:1.5rem}
 }
 </style>
 </head>
 <body>
+<div class="bg-blobs">
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+</div>
 <div id="root"></div>
+
 <script type="text/babel">
-const { useState, useEffect } = React;
+const { useState, useEffect, useRef } = React;
 const NAV_LINKS = ['about','projects','experience','contact'];
 
+// Native Hook for Scroll Animations (Framer Motion alternative)
+function useReveal() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
+
+// Native Hook for Mouse Glow Effect on Cards
+function useMouseGlow() {
+  const handleMouseMove = (e) => {
+    const cards = document.querySelectorAll('.project-card');
+    for (const card of cards) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+}
+
 function App() {
+  useMouseGlow();
   const [active, setActive] = useState('');
+  
   useEffect(() => {
     const handler = () => {
       const sections = NAV_LINKS.map(id => document.getElementById(id));
-      const scrollY = window.scrollY + 80;
+      const scrollY = window.scrollY + 100;
       for (let i = sections.length - 1; i >= 0; i--) {
         if (sections[i] && sections[i].offsetTop <= scrollY) { setActive(NAV_LINKS[i]); return; }
       }
       setActive('');
     };
     window.addEventListener('scroll', handler);
+    // Trigger entrance animation for hero items immediately
+    setTimeout(() => {
+      document.querySelectorAll('.hero-reveal').forEach(el => el.classList.add('active'));
+    }, 100);
     return () => window.removeEventListener('scroll', handler);
   }, []);
-  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 64;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <nav>
-        <span className="nav-logo">kishore.dev</span>
+        <span className="nav-logo">kishore<span>.dev</span></span>
         <div className="nav-links">
           {NAV_LINKS.map(id => (
             <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}
@@ -143,10 +227,11 @@ function App() {
         </div>
       </nav>
       <Hero scrollTo={scrollTo} />
-      <div className="divider" /><About /><div className="divider" />
-      <Projects /><div className="divider" /><Experience /><div className="divider" />
+      <About />
+      <Projects />
+      <Experience />
       <Contact />
-      <footer>built with React · Kishore R © 2026</footer>
+      <footer>built with React & Modern Animations · Kishore R © 2026</footer>
     </>
   );
 }
@@ -154,12 +239,11 @@ function App() {
 function Hero({ scrollTo }) {
   return (
     <div className="hero">
-      <div className="hero-grid" aria-hidden="true" />
       <div className="hero-inner">
-        <div className="hero-tag">Full-Stack · React Native · MERN</div>
-        <h1>Hi, I'm <span>Kishore R</span></h1>
-        <p className="hero-sub">I build production-grade web apps and mobile experiences — from MERN billing platforms to Play Store–published React Native apps.</p>
-        <div className="hero-btns">
+        <div className="hero-tag reveal hero-reveal delay-1">Full-Stack · React Native · MERN</div>
+        <h1 className="reveal hero-reveal delay-1">Hi, I'm <span>Kishore R</span></h1>
+        <p className="hero-sub reveal hero-reveal delay-2">I build production-grade web apps and mobile experiences — from MERN billing platforms to Play Store–published React Native apps.</p>
+        <div className="hero-btns reveal hero-reveal delay-2">
           <a href="#projects" className="btn btn-primary" onClick={e => { e.preventDefault(); scrollTo('projects'); }}>
             <i className="fa fa-folder-open" aria-hidden="true" /> View projects
           </a>
@@ -167,7 +251,7 @@ function Hero({ scrollTo }) {
             <i className="fa fa-envelope" aria-hidden="true" /> Get in touch
           </a>
         </div>
-        <div className="hero-stats">
+        <div className="hero-stats reveal hero-reveal delay-3">
           {[['~1 yr','experience'],['2','Play Store apps'],['35+','APIs integrated'],['3','prod deployments']].map(([n,l]) => (
             <div key={l} style={{textAlign:'center'}}>
               <div className="stat-num">{n}</div>
@@ -181,6 +265,7 @@ function Hero({ scrollTo }) {
 }
 
 function About() {
+  const ref = useReveal();
   const skills = [
     { label: 'mobile', tags: ['React Native','Context API','MMKV','AsyncStorage','NetInfo','Axios'], highlight: true },
     { label: 'frontend', tags: ['React.js','JavaScript ES6+','Tailwind CSS','HTML5','CSS3','Bootstrap'] },
@@ -189,7 +274,7 @@ function About() {
     { label: 'tools', tags: ['Git','GitHub','VS Code','Postman'] },
   ];
   return (
-    <section id="about">
+    <section id="about" ref={ref} className="reveal">
       <div className="section-eyebrow">about me</div>
       <h2 className="section-title">Background</h2>
       <p className="section-sub">Who I am and what I work with</p>
@@ -198,11 +283,11 @@ function About() {
           <p>I'm a Full-Stack Developer based in Tamil Nadu, India with a background in Electronics & Communication Engineering. I transitioned into web and mobile development, starting with PHP and MySQL before moving into the React ecosystem.</p>
           <p>I work at Rathna Softnet Technology in Nagercoil, where I build cross-platform mobile apps in React Native and maintain PHP web systems. On the side, I shipped a MERN billing SaaS for a wedding films studio.</p>
           <p>I'm most interested in mobile-first product work — particularly React Native apps that need solid offline support, clean API integration, and real-world production deployment.</p>
-          <div style={{marginTop:'1.5rem',display:'flex',gap:'12px',flexWrap:'wrap'}}>
-            <a href="https://linkedin.com/in/kishore-r03" target="_blank" className="btn btn-outline" style={{fontSize:'13px',padding:'8px 16px'}}>
+          <div style={{marginTop:'2rem',display:'flex',gap:'12px',flexWrap:'wrap'}}>
+            <a href="https://linkedin.com/in/kishore-r03" target="_blank" className="btn btn-outline" style={{fontSize:'13px',padding:'10px 20px'}}>
               <i className="fab fa-linkedin" /> LinkedIn
             </a>
-            <a href="https://github.com/YOUR_USERNAME" target="_blank" className="btn btn-outline" style={{fontSize:'13px',padding:'8px 16px'}}>
+            <a href="https://github.com/kishore2003K" target="_blank" className="btn btn-outline" style={{fontSize:'13px',padding:'10px 20px'}}>
               <i className="fab fa-github" /> GitHub
             </a>
           </div>
@@ -223,6 +308,7 @@ function About() {
 }
 
 function Projects() {
+  const ref = useReveal();
   const projects = [
     {
       name: 'CLIKZ Wedding Films – Billing System',
@@ -236,7 +322,7 @@ function Projects() {
       ],
       tech: ['React','Node.js','Express','MongoDB','Tailwind CSS','JWT'],
       featured: true,
-      link: 'YOUR_VERCEL_URL',
+      link: '#',
     },
     {
       name: 'Atreyapp – Energy Monitoring',
@@ -264,12 +350,12 @@ function Projects() {
     },
   ];
   return (
-    <section id="projects">
+    <section id="projects" ref={ref} className="reveal">
       <div className="section-eyebrow">work</div>
       <h2 className="section-title">Projects</h2>
       <p className="section-sub">Things I've built and shipped</p>
       <div className="projects-grid">
-        {projects.map(p => (
+        {projects.map((p, i) => (
           <div key={p.name} className={`project-card ${p.featured ? 'featured' : ''}`}>
             <div className="project-header">
               <span className="project-name">{p.name}</span>
@@ -292,8 +378,9 @@ function Projects() {
 }
 
 function Experience() {
+  const ref = useReveal();
   return (
-    <section id="experience">
+    <section id="experience" ref={ref} className="reveal">
       <div className="section-eyebrow">career</div>
       <h2 className="section-title">Experience</h2>
       <p className="section-sub">Where I've worked</p>
@@ -312,24 +399,25 @@ function Experience() {
           ].map(p => <div key={p} className="exp-point">{p}</div>)}
         </div>
       </div>
-      <div style={{marginTop:'1.5rem',background:'var(--bg2)',border:'1px solid var(--border)',borderRadius:'var(--radius)',padding:'1.25rem 1.5rem'}}>
-        <div style={{fontSize:'13px',color:'var(--dim)',marginBottom:'0.5rem',fontFamily:"'Fira Code',monospace"}}>education</div>
-        <div style={{fontWeight:600}}>B.E. – Electronics & Communication Engineering</div>
-        <div style={{fontSize:'13px',color:'var(--muted)',marginTop:'3px'}}>Ponjesly College of Engineering, Tamil Nadu · 2020–2024 · CGPA 7.7/10</div>
+      <div className="exp-card" style={{marginTop:'2rem', padding:'2rem 2.5rem'}}>
+        <div style={{fontSize:'12px',color:'var(--dim)',marginBottom:'0.5rem',fontFamily:"'Fira Code',monospace",textTransform:'uppercase'}}>education</div>
+        <div style={{fontWeight:600,color:'#fff',fontSize:'1.15rem'}}>B.E. – Electronics & Communication Engineering</div>
+        <div style={{fontSize:'0.95rem',color:'var(--muted)',marginTop:'6px'}}>Ponjesly College of Engineering, Tamil Nadu · 2020–2024 · CGPA 7.7/10</div>
       </div>
     </section>
   );
 }
 
 function Contact() {
+  const ref = useReveal();
   const items = [
     { icon:'fa fa-envelope', label:'email', value:'rkishore0333@gmail.com', href:'mailto:rkishore0333@gmail.com', color:'#4f8ef7', bg:'rgba(79,142,247,0.1)' },
     { icon:'fa fa-phone', label:'phone', value:'+91 63746 68193', href:'tel:+916374668193', color:'#3dd68c', bg:'rgba(61,214,140,0.1)' },
     { icon:'fab fa-linkedin', label:'linkedin', value:'kishore-r03', href:'https://linkedin.com/in/kishore-r03', color:'#7c6bf5', bg:'rgba(124,107,245,0.1)' },
-    { icon:'fab fa-github', label:'github', value:'YOUR_USERNAME', href:'https://github.com/YOUR_USERNAME', color:'#888', bg:'rgba(136,136,136,0.1)' },
+    { icon:'fab fa-github', label:'github', value:'kishore2003K', href:'https://github.com/kishore2003K', color:'#bbb', bg:'rgba(255,255,255,0.08)' },
   ];
   return (
-    <section id="contact">
+    <section id="contact" ref={ref} className="reveal">
       <div className="section-eyebrow">contact</div>
       <h2 className="section-title">Get in touch</h2>
       <p className="section-sub">Open to freelance, full-time roles, and interesting projects</p>
