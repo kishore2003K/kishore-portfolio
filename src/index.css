@@ -44,11 +44,24 @@ button { font-family: inherit; }
 .nav-bottom-right { bottom: 30px; left: 75%; transform: translateX(-50%); }
 .nav-bottom-right:hover { transform: translateX(-50%) scale(1.1); }
 
-.nav-left { left: 30px; top: 50%; transform: translate(-50%, -50%) rotate(-90deg); }
-.nav-left:hover { transform: translate(-50%, -50%) rotate(-90deg) scale(1.1); }
+.nav-left { 
+  left: 25px; 
+  top: 0; bottom: 0; 
+  margin: auto; 
+  height: max-content;
+  writing-mode: vertical-rl; 
+  transform: rotate(180deg); 
+}
+.nav-left:hover { transform: rotate(180deg) scale(1.1); }
 
-.nav-right { right: 30px; top: 50%; transform: translate(50%, -50%) rotate(90deg); }
-.nav-right:hover { transform: translate(50%, -50%) rotate(90deg) scale(1.1); }
+.nav-right { 
+  right: 25px; 
+  top: 0; bottom: 0; 
+  margin: auto; 
+  height: max-content;
+  writing-mode: vertical-rl; 
+}
+.nav-right:hover { transform: scale(1.1); }
 
 /* Logo & Say Hi */
 .logo {
@@ -101,14 +114,12 @@ button { font-family: inherit; }
 /* Central Hero Box */
 .hero-box {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0; bottom: 0; left: 0; right: 0;
+  margin: auto;
   width: 65%;
   max-width: 900px;
   height: 60%;
   display: flex;
-  z-index: 5;
 }
 .hero-box-outline {
   position: absolute;
@@ -287,30 +298,30 @@ button { font-family: inherit; }
 ------------------- */
 @media(max-width: 768px) {
   /* Central Box */
-  .hero-box { width: 75%; height: 70%; top: 50%; padding: 0; flex-direction: column; justify-content: flex-start; }
+  .hero-box { width: 80%; height: 68%; padding: 0; flex-direction: column; justify-content: flex-start; }
   .hero-box-outline { display: block; border-width: 1.5px; }
   
-  .hero-left { padding: 1.5rem 1rem; align-items: flex-start; text-align: left; }
-  .hero-left h1 { font-size: 1.8rem; margin-bottom: 0.5rem; white-space: normal; }
-  .hero-left p { font-size: 0.85rem; line-height: 1.4; max-width: 100%; }
+  .hero-left { padding: 2rem 1.5rem; align-items: flex-start; text-align: left; }
+  .hero-left h1 { font-size: 2.1rem; margin-bottom: 0.5rem; white-space: normal; }
+  .hero-left p { font-size: 0.95rem; line-height: 1.5; max-width: 100%; }
   
   /* Avatar overlapping bottom center */
-  .hero-right { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); width: auto; height: auto; }
-  .avatar-placeholder { width: 80px; height: 80px; font-size: 2.5rem; border-radius: 12px; box-shadow: none; }
+  .hero-right { position: absolute; bottom: -45px; left: 0; right: 0; margin: auto; width: 90px; height: 90px; display: flex; justify-content: center; }
+  .avatar-placeholder { width: 90px; height: 90px; font-size: 2.5rem; border-radius: 12px; box-shadow: none; }
   
   /* Edge Navs */
-  .nav-link { font-size: 0.6rem; letter-spacing: 1px; }
-  .nav-top { display: block; top: 15px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; }
+  .nav-link { font-size: 0.65rem; letter-spacing: 1.5px; text-transform: uppercase; }
+  .nav-top { display: block; position: absolute; top: 15px; left: 0; right: 0; margin: auto; width: max-content; text-align: center; }
   .nav-bottom-left { bottom: 25px; left: 15px; transform: none; }
   .nav-bottom-right { bottom: 25px; right: 60px; left: auto; transform: none; }
   
-  .nav-left { left: 12px; top: 50%; }
-  .nav-right { right: 12px; top: 50%; }
+  .nav-left { left: 10px; }
+  .nav-right { right: 10px; }
   
-  .logo { top: 15px; left: 15px; font-size: 1.2rem; }
-  .say-hi { top: 15px; right: 15px; font-size: 0.8rem; }
+  .logo { top: 15px; left: 15px; font-size: 1.3rem; }
+  .say-hi { top: 15px; right: 15px; font-size: 0.85rem; }
   
-  .socials-left { left: 15px; bottom: 75px; font-size: 0.9rem; gap: 12px; }
+  .socials-left { left: 15px; bottom: 75px; font-size: 1rem; gap: 15px; }
   .yin-yang { bottom: 15px; right: 15px; font-size: 1.8rem; display: block; }
 
   /* Inner Pages */
