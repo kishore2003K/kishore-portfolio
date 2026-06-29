@@ -7,20 +7,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a0a0a;
-  --bg2:rgba(20,20,20,0.6);
-  --bg3:rgba(30,30,30,0.6);
-  --border:rgba(255,255,255,0.08);
-  --border2:rgba(255,255,255,0.15);
-  --text:#f0f0f0;--muted:#999;--dim:#666;
-  --accent:#4f8ef7;--accent2:#7c6bf5;
-  --green:#3dd68c;--amber:#f0a429;
-  --radius:16px;
+  --bg:#f8fafc;
+  --bg2:#ffffff;
+  --bg3:#f1f5f9;
+  --border:#e2e8f0;
+  --border2:#cbd5e1;
+  --text:#0f172a;
+  --muted:#475569;
+  --dim:#64748b;
+  --accent:#2563eb;
+  --accent2:#4f46e5;
+  --green:#059669;
+  --amber:#d97706;
+  --radius:20px;
+  --shadow:0 10px 30px -10px rgba(0,0,0,0.08);
+  --shadow-hover:0 20px 40px -10px rgba(0,0,0,0.12);
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden}
@@ -28,9 +35,9 @@ a{color:inherit;text-decoration:none}
 
 /* Animated Background */
 .bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: var(--bg); pointer-events: none; }
-.bg-blob { position: absolute; filter: blur(120px); opacity: 0.35; animation: float 20s infinite ease-in-out; border-radius: 50%; }
-.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(79, 142, 247, 0.2); animation-delay: 0s; }
-.blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: rgba(124, 107, 245, 0.2); animation-delay: -5s; }
+.bg-blob { position: absolute; filter: blur(120px); opacity: 0.6; animation: float 20s infinite ease-in-out; border-radius: 50%; }
+.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(37, 99, 235, 0.15); animation-delay: 0s; }
+.blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: rgba(79, 70, 229, 0.15); animation-delay: -5s; }
 
 @keyframes float {
   0%, 100% { transform: translate(0, 0) scale(1); }
@@ -38,86 +45,88 @@ a{color:inherit;text-decoration:none}
   66% { transform: translate(-5%, 2%) scale(0.95); }
 }
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;transition:all 0.3s ease}
-.nav-logo{font-family:'Fira Code',monospace;font-size:15px;color:var(--text);letter-spacing:0.05em;font-weight:600;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;transition:all 0.3s ease}
+.nav-logo{font-family:'Fira Code',monospace;font-size:16px;color:var(--text);letter-spacing:0.02em;font-weight:700;}
 .nav-logo span{color:var(--accent)}
 .nav-links{display:flex;gap:2.5rem}
-.nav-links a{font-size:13px;color:var(--muted);transition:color 0.2s}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color 0.2s}
 .nav-links a:hover{color:var(--text)}
 .nav-links a.active{color:var(--accent)}
 
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 2rem 4rem;text-align:center;position:relative}
-.hero-inner{position:relative;z-index:1;max-width:700px}
-.hero-tag{display:inline-block;font-family:'Fira Code',monospace;font-size:12px;color:var(--accent);background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.25);border-radius:30px;padding:6px 18px;margin-bottom:1.5rem;letter-spacing:0.04em}
-.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1.2rem}
+.hero-inner{position:relative;z-index:1;max-width:750px}
+.hero-tag{display:inline-block;font-family:'Fira Code',monospace;font-size:12px;font-weight:600;color:var(--accent);background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.2);border-radius:30px;padding:6px 20px;margin-bottom:1.5rem;letter-spacing:0.04em}
+.hero h1{font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.1;letter-spacing:-0.04em;margin-bottom:1.2rem}
 .hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:1.15rem;color:var(--muted);max-width:540px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-sub{font-size:1.15rem;color:var(--muted);max-width:580px;margin:0 auto 2.5rem;line-height:1.7}
 .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn{padding:12px 28px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);border:none;display:inline-flex;align-items:center;gap:10px}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(79,142,247,0.3)}
-.btn-primary:hover{background:#3a7ae8;transform:translateY(-2px);box-shadow:0 6px 20px rgba(79,142,247,0.4)}
-.btn-outline{background:var(--bg3);color:var(--text);border:1px solid var(--border);backdrop-filter:blur(8px)}
-.btn-outline:hover{background:rgba(255,255,255,0.05);border-color:var(--border2);transform:translateY(-2px)}
+.btn{padding:12px 28px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);border:none;display:inline-flex;align-items:center;gap:10px}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(37,99,235,0.25)}
+.btn-primary:hover{background:#1d4ed8;transform:translateY(-2px);box-shadow:0 12px 28px rgba(37,99,235,0.35)}
+.btn-outline{background:var(--bg2);color:var(--text);border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.03)}
+.btn-outline:hover{background:var(--bg3);border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 16px rgba(0,0,0,0.06)}
 .hero-stats{display:flex;gap:3.5rem;justify-content:center;margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--border)}
-.stat-num{font-size:1.8rem;font-weight:700;color:var(--text)}
-.stat-label{font-size:13px;color:var(--dim);margin-top:4px}
+.stat-num{font-size:2rem;font-weight:800;color:var(--text)}
+.stat-label{font-size:13px;font-weight:600;color:var(--dim);margin-top:4px}
 
 section{padding:6rem 2rem;max-width:900px;margin:0 auto}
-.section-eyebrow{font-family:'Fira Code',monospace;font-size:12px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;display:flex;align-items:center;gap:12px}
+.section-eyebrow{font-family:'Fira Code',monospace;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;display:flex;align-items:center;gap:12px}
 .section-eyebrow::after{content:'';height:1px;background:var(--border);flex-grow:1;max-width:80px}
-.section-title{font-size:2.4rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.5rem}
+.section-title{font-size:2.4rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.5rem}
 .section-sub{color:var(--muted);font-size:1.05rem;margin-bottom:4rem}
 
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
-.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1.2rem;font-size:0.98rem}
+.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1.2rem;font-size:1rem}
 .about-text p:last-child{margin-bottom:0}
 .skills-block{display:flex;flex-direction:column;gap:20px}
 .skill-row{display:flex;flex-direction:column;gap:10px}
-.skill-label{font-size:12px;color:var(--dim);font-family:'Fira Code',monospace;text-transform:uppercase;letter-spacing:0.05em}
+.skill-label{font-size:12px;font-weight:600;color:var(--dim);font-family:'Fira Code',monospace;text-transform:uppercase;letter-spacing:0.05em}
 .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
-.tag{font-size:12px;padding:6px 14px;border-radius:8px;font-family:'Fira Code',monospace;background:var(--bg3);color:var(--text);border:1px solid var(--border);transition:all 0.2s}
-.tag:hover{transform:translateY(-2px);border-color:var(--border2);background:rgba(255,255,255,0.05)}
-.tag.highlight{background:rgba(79,142,247,0.1);color:var(--accent);border-color:rgba(79,142,247,0.25)}
+.tag{font-size:13px;font-weight:500;padding:6px 14px;border-radius:10px;font-family:'Fira Code',monospace;background:var(--bg2);color:var(--text);border:1px solid var(--border);transition:all 0.2s;box-shadow:0 2px 5px rgba(0,0,0,0.02)}
+.tag:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:0 6px 12px rgba(0,0,0,0.05)}
+.tag.highlight{background:rgba(37,99,235,0.08);color:var(--accent);border-color:rgba(37,99,235,0.2)}
 
-.projects-grid{display:grid;gap:2rem}
-.project-card{border-radius:var(--radius);padding:2.5rem;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);cursor:default;position:relative;overflow:hidden;background:var(--bg2);border:1px solid var(--border);backdrop-filter:blur(16px)}
-.project-card::before{content:'';position:absolute;inset:0;background:radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);opacity:0;transition:opacity 0.4s;pointer-events:none}
-.project-card:hover::before{opacity:1}
-.project-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.3)}
-.project-card.featured{border-color:rgba(79,142,247,0.2)}
-.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.2rem;gap:1rem}
-.project-name{font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:#fff}
+.projects-grid{display:grid;gap:2.5rem}
+/* Vanilla Tilt 3D Properties */
+.project-card{border-radius:var(--radius);padding:2.5rem;transition:box-shadow 0.4s cubic-bezier(0.16,1,0.3,1);cursor:pointer;position:relative;background:var(--bg2);border:1px solid var(--border);box-shadow:var(--shadow);transform-style:preserve-3d;will-change:transform}
+.project-card:hover{border-color:var(--border2);box-shadow:var(--shadow-hover)}
+.project-card.featured{border-color:rgba(37,99,235,0.2);box-shadow:0 10px 30px -10px rgba(37,99,235,0.15)}
+.project-card.featured:hover{box-shadow:0 20px 40px -10px rgba(37,99,235,0.25)}
+
+/* Parallax Inner Translations for 3D Pop */
+.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.2rem;gap:1rem;transform:translateZ(40px)}
+.project-name{font-size:1.3rem;font-weight:800;letter-spacing:-0.01em;color:var(--text)}
 .project-badges{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
-.badge{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:500;display:flex;align-items:center;gap:4px}
-.badge-store{background:rgba(61,214,140,0.12);color:var(--green);border:1px solid rgba(61,214,140,0.25)}
-.badge-live{background:rgba(79,142,247,0.12);color:var(--accent);border:1px solid rgba(79,142,247,0.25)}
-.badge-mern{background:rgba(124,107,245,0.12);color:var(--accent2);border:1px solid rgba(124,107,245,0.25)}
-.project-desc{font-size:1rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
-.project-highlights{display:flex;flex-direction:column;gap:10px;margin-bottom:2rem}
-.highlight-item{font-size:0.9rem;color:#bbb;display:flex;gap:12px;align-items:flex-start}
-.highlight-item::before{content:'›';color:var(--accent);font-weight:700;flex-shrink:0;font-size:1rem}
-.project-tech{display:flex;flex-wrap:wrap;gap:8px;padding-top:1.5rem;border-top:1px solid var(--border)}
-.tech-pill{font-size:12px;padding:4px 12px;border-radius:8px;background:rgba(255,255,255,0.03);color:var(--text);border:1px solid var(--border);font-family:'Fira Code',monospace}
+.badge{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:600;display:flex;align-items:center;gap:4px}
+.badge-store{background:rgba(5,150,105,0.1);color:var(--green);border:1px solid rgba(5,150,105,0.2)}
+.badge-live{background:rgba(37,99,235,0.1);color:var(--accent);border:1px solid rgba(37,99,235,0.2)}
+.badge-mern{background:rgba(79,70,229,0.1);color:var(--accent2);border:1px solid rgba(79,70,229,0.2)}
+.project-desc{font-size:1.05rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;transform:translateZ(30px)}
+.project-highlights{display:flex;flex-direction:column;gap:10px;margin-bottom:2rem;transform:translateZ(20px)}
+.highlight-item{font-size:0.95rem;color:var(--muted);display:flex;gap:12px;align-items:flex-start}
+.highlight-item::before{content:'›';color:var(--accent);font-weight:800;flex-shrink:0;font-size:1.1rem}
+.project-tech{display:flex;flex-wrap:wrap;gap:8px;padding-top:1.5rem;border-top:1px solid var(--border);transform:translateZ(30px)}
+.tech-pill{font-size:12px;font-weight:600;padding:5px 14px;border-radius:10px;background:var(--bg3);color:var(--text);border:1px solid var(--border);font-family:'Fira Code',monospace}
 
-.exp-card{border-radius:var(--radius);padding:2.5rem;position:relative;background:var(--bg2);border:1px solid var(--border);backdrop-filter:blur(16px)}
+.exp-card{border-radius:var(--radius);padding:2.5rem;position:relative;background:var(--bg2);border:1px solid var(--border);box-shadow:var(--shadow);transform-style:preserve-3d;cursor:pointer}
 .exp-card::before{content:'';position:absolute;left:0;top:2.5rem;bottom:2.5rem;width:4px;background:linear-gradient(to bottom,var(--accent),var(--accent2));border-radius:0 4px 4px 0}
-.exp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-left:1.5rem;flex-wrap:wrap;gap:1rem}
-.exp-company{font-weight:600;font-size:1.15rem;color:#fff}
-.exp-date{font-size:12px;color:var(--text);font-family:'Fira Code',monospace;background:var(--bg3);padding:4px 12px;border-radius:20px;border:1px solid var(--border)}
-.exp-role{font-size:1rem;color:var(--accent);margin-bottom:1.5rem;padding-left:1.5rem;font-weight:500}
-.exp-points{padding-left:1.5rem;display:flex;flex-direction:column;gap:12px}
-.exp-point{font-size:0.95rem;color:var(--muted);display:flex;gap:12px;line-height:1.6}
-.exp-point::before{content:'—';color:var(--dim);flex-shrink:0}
+.exp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-left:1.5rem;flex-wrap:wrap;gap:1rem;transform:translateZ(30px)}
+.exp-company{font-weight:800;font-size:1.25rem;color:var(--text)}
+.exp-date{font-size:12px;font-weight:600;color:var(--muted);font-family:'Fira Code',monospace;background:var(--bg3);padding:6px 14px;border-radius:20px;border:1px solid var(--border)}
+.exp-role{font-size:1.05rem;color:var(--accent);margin-bottom:1.5rem;padding-left:1.5rem;font-weight:600;transform:translateZ(20px)}
+.exp-points{padding-left:1.5rem;display:flex;flex-direction:column;gap:12px;transform:translateZ(10px)}
+.exp-point{font-size:1rem;color:var(--muted);display:flex;gap:12px;line-height:1.6}
+.exp-point::before{content:'—';color:var(--dim);flex-shrink:0;font-weight:800}
 
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;display:flex;align-items:center;gap:1.5rem;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);backdrop-filter:blur(16px)}
-.contact-card:hover{border-color:var(--border2);transform:translateY(-4px);background:rgba(30,30,30,0.8);box-shadow:0 12px 30px rgba(0,0,0,0.2)}
-.contact-icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;transition:transform 0.3s}
+.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;display:flex;align-items:center;gap:1.5rem;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:var(--shadow)}
+.contact-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.contact-icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;transition:transform 0.3s;background:var(--bg3)}
 .contact-card:hover .contact-icon{transform:scale(1.1) rotate(5deg)}
-.contact-label{font-size:12px;color:var(--dim);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;font-family:'Fira Code',monospace}
-.contact-value{font-size:15px;font-weight:500;word-break:break-all;color:var(--text)}
+.contact-label{font-size:12px;font-weight:600;color:var(--dim);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;font-family:'Fira Code',monospace}
+.contact-value{font-size:15px;font-weight:600;word-break:break-all;color:var(--text)}
 
-footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;color:var(--dim);font-size:13px;font-family:'Fira Code',monospace}
+footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;color:var(--dim);font-size:14px;font-family:'Fira Code',monospace;background:var(--bg2)}
 
 /* Professional Reveal Animations */
 .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.16,1,0.3,1); }
@@ -130,10 +139,10 @@ footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;co
   .about-grid{grid-template-columns:1fr;gap:3rem}
   .contact-grid{grid-template-columns:1fr}
   .nav-links{gap:1.5rem;display:none} /* Simplistic mobile handling */
-  .hero h1{font-size:2.4rem}
+  .hero h1{font-size:2.8rem}
   .hero-stats{gap:2rem;flex-wrap:wrap}
-  section{padding:4rem 1.5rem}
-  .project-card, .exp-card{padding:1.5rem}
+  section{padding:5rem 1.5rem}
+  .project-card, .exp-card{padding:2rem}
   .contact-card{padding:1.5rem}
 }
 </style>
@@ -149,7 +158,7 @@ footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;co
 const { useState, useEffect, useRef } = React;
 const NAV_LINKS = ['about','projects','experience','contact'];
 
-// Native Hook for Scroll Animations (Framer Motion alternative)
+// Native Hook for Scroll Animations
 function useReveal() {
   const ref = useRef(null);
   useEffect(() => {
@@ -168,26 +177,28 @@ function useReveal() {
   return ref;
 }
 
-// Native Hook for Mouse Glow Effect on Cards
-function useMouseGlow() {
-  const handleMouseMove = (e) => {
-    const cards = document.querySelectorAll('.project-card');
-    for (const card of cards) {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    }
-  };
+// 3D VanillaTilt Hook
+function useVanillaTilt() {
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    // Small timeout to ensure DOM elements are rendered
+    setTimeout(() => {
+      const cards = document.querySelectorAll('.project-card, .exp-card');
+      if (cards.length > 0 && window.VanillaTilt) {
+        VanillaTilt.init(cards, {
+          max: 6,
+          speed: 400,
+          glare: true,
+          "max-glare": 0.15,
+          scale: 1.02,
+          perspective: 1000
+        });
+      }
+    }, 200);
   }, []);
 }
 
 function App() {
-  useMouseGlow();
+  useVanillaTilt();
   const [active, setActive] = useState('');
   
   useEffect(() => {
@@ -231,7 +242,7 @@ function App() {
       <Projects />
       <Experience />
       <Contact />
-      <footer>built with React & Modern Animations · Kishore R © 2026</footer>
+      <footer>built with React & 3D Animations · Kishore R © 2026</footer>
     </>
   );
 }
@@ -252,7 +263,7 @@ function Hero({ scrollTo }) {
           </a>
         </div>
         <div className="hero-stats reveal hero-reveal delay-3">
-          {[['~1 yr','experience'],['2','Play Store apps'],['35+','APIs integrated'],['3','prod deployments']].map(([n,l]) => (
+          {[['~1 yr','experience'],['3','Play Store apps'],['35+','APIs integrated'],['4','prod deployments']].map(([n,l]) => (
             <div key={l} style={{textAlign:'center'}}>
               <div className="stat-num">{n}</div>
               <div className="stat-label">{l}</div>
@@ -311,6 +322,20 @@ function Projects() {
   const ref = useReveal();
   const projects = [
     {
+      name: 'Nadarmahamai Matrimony Mobile Application',
+      badges: [{ label: 'Play Store', cls: 'badge-store' }],
+      desc: 'React Native mobile application for matchmaking and profile management.',
+      highlights: [
+        'Designed and implemented a multi-step registration flow with form validation and smooth user experience',
+        'Developed core mobile screens including Register, Profiles, and Profile Details using React Native',
+        'Integrated backend APIs for authentication, profile browsing, and search functionality',
+        'Managed user sessions and local storage using AsyncStorage for persistent login',
+        'Improved app reliability by handling API errors, loading states, and network conditions'
+      ],
+      tech: ['React Native', 'AsyncStorage', 'REST APIs', 'Axios'],
+      featured: true,
+    },
+    {
       name: 'CLIKZ Wedding Films – Billing System',
       badges: [{ label: 'Live ↗', cls: 'badge-live' },{ label: 'MERN', cls: 'badge-mern' }],
       desc: 'Full-stack billing platform for a photography studio to manage invoices, clients, and revenue tracking — deployed on Vercel.',
@@ -321,8 +346,7 @@ function Projects() {
         'JWT-based authentication and session management',
       ],
       tech: ['React','Node.js','Express','MongoDB','Tailwind CSS','JWT'],
-      featured: true,
-      link: '#',
+      featured: false,
     },
     {
       name: 'Atreyapp – Energy Monitoring',
@@ -399,10 +423,10 @@ function Experience() {
           ].map(p => <div key={p} className="exp-point">{p}</div>)}
         </div>
       </div>
-      <div className="exp-card" style={{marginTop:'2rem', padding:'2rem 2.5rem'}}>
-        <div style={{fontSize:'12px',color:'var(--dim)',marginBottom:'0.5rem',fontFamily:"'Fira Code',monospace",textTransform:'uppercase'}}>education</div>
-        <div style={{fontWeight:600,color:'#fff',fontSize:'1.15rem'}}>B.E. – Electronics & Communication Engineering</div>
-        <div style={{fontSize:'0.95rem',color:'var(--muted)',marginTop:'6px'}}>Ponjesly College of Engineering, Tamil Nadu · 2020–2024 · CGPA 7.7/10</div>
+      <div className="exp-card" style={{marginTop:'2rem', padding:'2rem 2.5rem', cursor:'default'}}>
+        <div style={{fontSize:'12px',color:'var(--dim)',marginBottom:'0.5rem',fontFamily:"'Fira Code',monospace",textTransform:'uppercase',fontWeight:600,transform:'translateZ(30px)'}}>education</div>
+        <div style={{fontWeight:800,color:'var(--text)',fontSize:'1.15rem',transform:'translateZ(20px)'}}>B.E. – Electronics & Communication Engineering</div>
+        <div style={{fontSize:'1rem',color:'var(--muted)',marginTop:'6px',transform:'translateZ(10px)'}}>Ponjesly College of Engineering, Tamil Nadu · 2020–2024 · CGPA 7.7/10</div>
       </div>
     </section>
   );
@@ -411,10 +435,10 @@ function Experience() {
 function Contact() {
   const ref = useReveal();
   const items = [
-    { icon:'fa fa-envelope', label:'email', value:'rkishore0333@gmail.com', href:'mailto:rkishore0333@gmail.com', color:'#4f8ef7', bg:'rgba(79,142,247,0.1)' },
-    { icon:'fa fa-phone', label:'phone', value:'+91 63746 68193', href:'tel:+916374668193', color:'#3dd68c', bg:'rgba(61,214,140,0.1)' },
-    { icon:'fab fa-linkedin', label:'linkedin', value:'kishore-r03', href:'https://linkedin.com/in/kishore-r03', color:'#7c6bf5', bg:'rgba(124,107,245,0.1)' },
-    { icon:'fab fa-github', label:'github', value:'kishore2003K', href:'https://github.com/kishore2003K', color:'#bbb', bg:'rgba(255,255,255,0.08)' },
+    { icon:'fa fa-envelope', label:'email', value:'rkishore0333@gmail.com', href:'mailto:rkishore0333@gmail.com', color:'#2563eb', bg:'rgba(37,99,235,0.1)' },
+    { icon:'fa fa-phone', label:'phone', value:'+91 63746 68193', href:'tel:+916374668193', color:'#059669', bg:'rgba(5,150,105,0.1)' },
+    { icon:'fab fa-linkedin', label:'linkedin', value:'kishore-r03', href:'https://linkedin.com/in/kishore-r03', color:'#4f46e5', bg:'rgba(79,70,229,0.1)' },
+    { icon:'fab fa-github', label:'github', value:'kishore2003K', href:'https://github.com/kishore2003K', color:'#0f172a', bg:'rgba(15,23,42,0.1)' },
   ];
   return (
     <section id="contact" ref={ref} className="reveal">
@@ -429,7 +453,7 @@ function Contact() {
             </div>
             <div>
               <div className="contact-label">{c.label}</div>
-              <div className="contact-value" style={{color:c.color}}>{c.value}</div>
+              <div className="contact-value" style={{color:c.text}}>{c.value}</div>
             </div>
           </a>
         ))}
