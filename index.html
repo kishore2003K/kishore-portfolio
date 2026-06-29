@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kishore R – Full-Stack Developer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d0d0d;--bg2:#141414;--bg3:#1a1a1a;
+  --border:#2a2a2a;--border2:#333;
+  --text:#e8e8e8;--muted:#888;--dim:#555;
+  --accent:#4f8ef7;--accent2:#7c6bf5;
+  --green:#3dd68c;--amber:#f0a429;
+  --radius:10px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,13,13,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{font-family:'Fira Code',monospace;font-size:14px;color:var(--accent);letter-spacing:0.05em}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:13px;color:var(--muted);transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--accent)}
+
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 2rem 4rem;text-align:center;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.3;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
+.hero-inner{position:relative;z-index:1;max-width:680px}
+.hero-tag{display:inline-block;font-family:'Fira Code',monospace;font-size:12px;color:var(--accent);background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.25);border-radius:20px;padding:4px 14px;margin-bottom:1.5rem;letter-spacing:0.04em}
+.hero h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1rem}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:480px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{padding:10px 22px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;border:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#3a7ae8;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border2)}
+.btn-outline:hover{background:var(--bg3);border-color:var(--muted)}
+.hero-stats{display:flex;gap:2.5rem;justify-content:center;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+.stat-num{font-size:1.6rem;font-weight:700;color:var(--text)}
+.stat-label{font-size:12px;color:var(--dim);margin-top:2px}
+
+section{padding:5rem 2rem;max-width:900px;margin:0 auto}
+.section-eyebrow{font-family:'Fira Code',monospace;font-size:11px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.6rem}
+.section-title{font-size:1.9rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.5rem}
+.section-sub{color:var(--muted);font-size:0.95rem;margin-bottom:3rem}
+.divider{height:1px;background:var(--border);max-width:900px;margin:0 auto}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1rem;font-size:0.95rem}
+.about-text p:last-child{margin-bottom:0}
+.skills-block{display:flex;flex-direction:column;gap:16px}
+.skill-row{display:flex;flex-direction:column;gap:6px}
+.skill-label{font-size:12px;color:var(--dim);font-family:'Fira Code',monospace}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;padding:3px 10px;border-radius:5px;font-family:'Fira Code',monospace;background:var(--bg3);color:var(--muted);border:1px solid var(--border)}
+.tag.highlight{background:rgba(79,142,247,0.1);color:var(--accent);border-color:rgba(79,142,247,0.25)}
+
+.projects-grid{display:grid;gap:1.5rem}
+.project-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:border-color 0.2s,transform 0.2s;cursor:default;position:relative;overflow:hidden}
+.project-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(79,142,247,0.04) 0%,transparent 60%);pointer-events:none}
+.project-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.project-card.featured{border-color:rgba(79,142,247,0.3)}
+.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;gap:1rem}
+.project-name{font-size:1rem;font-weight:600;letter-spacing:-0.01em}
+.project-badges{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:500}
+.badge-store{background:rgba(61,214,140,0.12);color:var(--green);border:1px solid rgba(61,214,140,0.25)}
+.badge-live{background:rgba(79,142,247,0.12);color:var(--accent);border:1px solid rgba(79,142,247,0.25)}
+.badge-mern{background:rgba(124,107,245,0.12);color:var(--accent2);border:1px solid rgba(124,107,245,0.25)}
+.project-desc{font-size:0.88rem;color:var(--muted);margin-bottom:1rem;line-height:1.65}
+.project-highlights{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem}
+.highlight-item{font-size:0.83rem;color:var(--dim);display:flex;gap:8px;align-items:flex-start}
+.highlight-item::before{content:'›';color:var(--accent);flex-shrink:0;margin-top:1px}
+.project-tech{display:flex;flex-wrap:wrap;gap:5px;padding-top:1rem;border-top:1px solid var(--border)}
+.tech-pill{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--bg3);color:var(--dim);border:1px solid var(--border);font-family:'Fira Code',monospace}
+
+.exp-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:relative}
+.exp-card::before{content:'';position:absolute;left:0;top:1.5rem;bottom:1.5rem;width:3px;background:linear-gradient(to bottom,var(--accent),var(--accent2));border-radius:0 2px 2px 0}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;padding-left:1rem}
+.exp-company{font-weight:600;font-size:1rem}
+.exp-date{font-size:12px;color:var(--dim);font-family:'Fira Code',monospace;background:var(--bg3);padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
+.exp-role{font-size:0.88rem;color:var(--accent);margin-bottom:0.75rem;padding-left:1rem}
+.exp-points{padding-left:1rem;display:flex;flex-direction:column;gap:5px}
+.exp-point{font-size:0.85rem;color:var(--muted);display:flex;gap:8px}
+.exp-point::before{content:'—';color:var(--dim);flex-shrink:0}
+
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;display:flex;align-items:center;gap:1rem;transition:border-color 0.2s}
+.contact-card:hover{border-color:var(--border2)}
+.contact-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.contact-label{font-size:12px;color:var(--dim);margin-bottom:2px}
+.contact-value{font-size:14px;font-weight:500;word-break:break-all}
+
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--dim);font-size:12px;font-family:'Fira Code',monospace}
+
+@media(max-width:640px){
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .nav-links{gap:1rem}
+  .hero h1{font-size:2rem}
+  .hero-stats{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
+const NAV_LINKS = ['about','projects','experience','contact'];
+
+function App() {
+  const [active, setActive] = useState('');
+  useEffect(() => {
+    const handler = () => {
+      const sections = NAV_LINKS.map(id => document.getElementById(id));
+      const scrollY = window.scrollY + 80;
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (sections[i] && sections[i].offsetTop <= scrollY) { setActive(NAV_LINKS[i]); return; }
+      }
+      setActive('');
+    };
+    window.addEventListener('scroll', handler);
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  return (
+    <>
+      <nav>
+        <span className="nav-logo">kishore.dev</span>
+        <div className="nav-links">
+          {NAV_LINKS.map(id => (
+            <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}
+               onClick={e => { e.preventDefault(); scrollTo(id); }}>{id}</a>
+          ))}
+        </div>
+      </nav>
+      <Hero scrollTo={scrollTo} />
+      <div className="divider" /><About /><div className="divider" />
+      <Projects /><div className="divider" /><Experience /><div className="divider" />
+      <Contact />
+      <footer>built with React · Kishore R © 2026</footer>
+    </>
+  );
+}
+
+function Hero({ scrollTo }) {
+  return (
+    <div className="hero">
+      <div className="hero-grid" aria-hidden="true" />
+      <div className="hero-inner">
+        <div className="hero-tag">Full-Stack · React Native · MERN</div>
+        <h1>Hi, I'm <span>Kishore R</span></h1>
+        <p className="hero-sub">I build production-grade web apps and mobile experiences — from MERN billing platforms to Play Store–published React Native apps.</p>
+        <div className="hero-btns">
+          <a href="#projects" className="btn btn-primary" onClick={e => { e.preventDefault(); scrollTo('projects'); }}>
+            <i className="fa fa-folder-open" aria-hidden="true" /> View projects
+          </a>
+          <a href="mailto:rkishore0333@gmail.com" className="btn btn-outline">
+            <i className="fa fa-envelope" aria-hidden="true" /> Get in touch
+          </a>
+        </div>
+        <div className="hero-stats">
+          {[['~1 yr','experience'],['2','Play Store apps'],['35+','APIs integrated'],['3','prod deployments']].map(([n,l]) => (
+            <div key={l} style={{textAlign:'center'}}>
+              <div className="stat-num">{n}</div>
+              <div className="stat-label">{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function About() {
+  const skills = [
+    { label: 'mobile', tags: ['React Native','Context API','MMKV','AsyncStorage','NetInfo','Axios'], highlight: true },
+    { label: 'frontend', tags: ['React.js','JavaScript ES6+','Tailwind CSS','HTML5','CSS3','Bootstrap'] },
+    { label: 'backend', tags: ['Node.js','Express.js','PHP','RESTful APIs','JWT Auth'] },
+    { label: 'databases', tags: ['MongoDB','MySQL'] },
+    { label: 'tools', tags: ['Git','GitHub','VS Code','Postman'] },
+  ];
+  return (
+    <section id="about">
+      <div className="section-eyebrow">about me</div>
+      <h2 className="section-title">Background</h2>
+      <p className="section-sub">Who I am and what I work with</p>
+      <div className="about-grid">
+        <div className="about-text">
+          <p>I'm a Full-Stack Developer based in Tamil Nadu, India with a background in Electronics & Communication Engineering. I transitioned into web and mobile development, starting with PHP and MySQL before moving into the React ecosystem.</p>
+          <p>I work at Rathna Softnet Technology in Nagercoil, where I build cross-platform mobile apps in React Native and maintain PHP web systems. On the side, I shipped a MERN billing SaaS for a wedding films studio.</p>
+          <p>I'm most interested in mobile-first product work — particularly React Native apps that need solid offline support, clean API integration, and real-world production deployment.</p>
+          <div style={{marginTop:'1.5rem',display:'flex',gap:'12px',flexWrap:'wrap'}}>
+            <a href="https://linkedin.com/in/kishore-r03" target="_blank" className="btn btn-outline" style={{fontSize:'13px',padding:'8px 16px'}}>
+              <i className="fab fa-linkedin" /> LinkedIn
+            </a>
+            <a href="https://github.com/YOUR_USERNAME" target="_blank" className="btn btn-outline" style={{fontSize:'13px',padding:'8px 16px'}}>
+              <i className="fab fa-github" /> GitHub
+            </a>
+          </div>
+        </div>
+        <div className="skills-block">
+          {skills.map(s => (
+            <div key={s.label} className="skill-row">
+              <span className="skill-label">{s.label}</span>
+              <div className="skill-tags">
+                {s.tags.map(t => <span key={t} className={`tag ${s.highlight ? 'highlight' : ''}`}>{t}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Projects() {
+  const projects = [
+    {
+      name: 'CLIKZ Wedding Films – Billing System',
+      badges: [{ label: 'Live ↗', cls: 'badge-live' },{ label: 'MERN', cls: 'badge-mern' }],
+      desc: 'Full-stack billing platform for a photography studio to manage invoices, clients, and revenue tracking — deployed on Vercel.',
+      highlights: [
+        'Automated invoice generation with multi-service tables and live total calculation',
+        'Dashboard for tracking invoice lifecycles: Draft, Sent, Partial, Paid',
+        'One-click WhatsApp sharing with pre-filled messages and PDF export',
+        'JWT-based authentication and session management',
+      ],
+      tech: ['React','Node.js','Express','MongoDB','Tailwind CSS','JWT'],
+      featured: true,
+      link: 'YOUR_VERCEL_URL',
+    },
+    {
+      name: 'Atreyapp – Energy Monitoring',
+      badges: [{ label: 'Play Store', cls: 'badge-store' }],
+      desc: 'Production React Native app for real-time industrial energy monitoring, published on Google Play Store.',
+      highlights: [
+        '20+ REST APIs for real-time meter data, dashboards, and historical analytics',
+        'Modules: Dashboard, Live Table, Tag View, and Node History',
+        'Charts and data viz using react-native-svg',
+        'Offline/online state handling with auto-refresh via NetInfo',
+      ],
+      tech: ['React Native','AsyncStorage','react-native-svg','NetInfo','Axios'],
+    },
+    {
+      name: 'Tenant Management App',
+      badges: [{ label: 'Play Store', cls: 'badge-store' }],
+      desc: 'React Native 0.82 app enabling tenants to manage contracts, submit move-out requests, and upload documents securely.',
+      highlights: [
+        '10+ screens: auth, profile, contract management, move-out request flows',
+        '15+ RESTful APIs via Axios with comprehensive error handling',
+        'Offline-first auto-save for form drafts, prevents data loss on network drop',
+        'Document upload system for PDFs and images with file validation',
+      ],
+      tech: ['React Native 0.82','Context API','MMKV','Axios','Gradle','NDK'],
+    },
+  ];
+  return (
+    <section id="projects">
+      <div className="section-eyebrow">work</div>
+      <h2 className="section-title">Projects</h2>
+      <p className="section-sub">Things I've built and shipped</p>
+      <div className="projects-grid">
+        {projects.map(p => (
+          <div key={p.name} className={`project-card ${p.featured ? 'featured' : ''}`}>
+            <div className="project-header">
+              <span className="project-name">{p.name}</span>
+              <div className="project-badges">
+                {p.badges.map(b => <span key={b.label} className={`badge ${b.cls}`}>{b.label}</span>)}
+              </div>
+            </div>
+            <p className="project-desc">{p.desc}</p>
+            <div className="project-highlights">
+              {p.highlights.map(h => <div key={h} className="highlight-item">{h}</div>)}
+            </div>
+            <div className="project-tech">
+              {p.tech.map(t => <span key={t} className="tech-pill">{t}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Experience() {
+  return (
+    <section id="experience">
+      <div className="section-eyebrow">career</div>
+      <h2 className="section-title">Experience</h2>
+      <p className="section-sub">Where I've worked</p>
+      <div className="exp-card">
+        <div className="exp-header">
+          <span className="exp-company">Rathna Softnet Technology, Nagercoil</span>
+          <span className="exp-date">Jul 2025 – Present</span>
+        </div>
+        <div className="exp-role">Full-Stack Developer</div>
+        <div className="exp-points">
+          {[
+            'Developed and maintained PHP web applications with MySQL integration',
+            'Built cross-platform mobile apps using React Native with native feature integration',
+            'Created responsive UIs using Tailwind CSS, Bootstrap, and mobile-first principles',
+            'Integrated RESTful APIs and implemented JWT authentication flows',
+          ].map(p => <div key={p} className="exp-point">{p}</div>)}
+        </div>
+      </div>
+      <div style={{marginTop:'1.5rem',background:'var(--bg2)',border:'1px solid var(--border)',borderRadius:'var(--radius)',padding:'1.25rem 1.5rem'}}>
+        <div style={{fontSize:'13px',color:'var(--dim)',marginBottom:'0.5rem',fontFamily:"'Fira Code',monospace"}}>education</div>
+        <div style={{fontWeight:600}}>B.E. – Electronics & Communication Engineering</div>
+        <div style={{fontSize:'13px',color:'var(--muted)',marginTop:'3px'}}>Ponjesly College of Engineering, Tamil Nadu · 2020–2024 · CGPA 7.7/10</div>
+      </div>
+    </section>
+  );
+}
+
+function Contact() {
+  const items = [
+    { icon:'fa fa-envelope', label:'email', value:'rkishore0333@gmail.com', href:'mailto:rkishore0333@gmail.com', color:'#4f8ef7', bg:'rgba(79,142,247,0.1)' },
+    { icon:'fa fa-phone', label:'phone', value:'+91 63746 68193', href:'tel:+916374668193', color:'#3dd68c', bg:'rgba(61,214,140,0.1)' },
+    { icon:'fab fa-linkedin', label:'linkedin', value:'kishore-r03', href:'https://linkedin.com/in/kishore-r03', color:'#7c6bf5', bg:'rgba(124,107,245,0.1)' },
+    { icon:'fab fa-github', label:'github', value:'YOUR_USERNAME', href:'https://github.com/YOUR_USERNAME', color:'#888', bg:'rgba(136,136,136,0.1)' },
+  ];
+  return (
+    <section id="contact">
+      <div className="section-eyebrow">contact</div>
+      <h2 className="section-title">Get in touch</h2>
+      <p className="section-sub">Open to freelance, full-time roles, and interesting projects</p>
+      <div className="contact-grid">
+        {items.map(c => (
+          <a key={c.label} href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} className="contact-card">
+            <div className="contact-icon" style={{background:c.bg,color:c.color}}>
+              <i className={c.icon} aria-hidden="true" />
+            </div>
+            <div>
+              <div className="contact-label">{c.label}</div>
+              <div className="contact-value" style={{color:c.color}}>{c.value}</div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
