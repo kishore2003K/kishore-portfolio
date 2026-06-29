@@ -10,7 +10,8 @@ const projectsData = [
   {
     name: 'CLIKZ Wedding Films',
     desc: 'Full-stack billing platform for a photography studio. Automated invoice generation, PDF exports, and one-click WhatsApp sharing.',
-    tech: ['React','Node.js','Express','MongoDB']
+    tech: ['React','Node.js','Express','MongoDB'],
+    link: 'https://studio.clikzweddingfilms.in/'
   },
   {
     name: 'Atreyapp',
@@ -42,7 +43,14 @@ export default function Projects() {
           {projectsData.map(p => (
             <div key={p.name} className="project-card card-light">
               <div className="project-header">
-                <div className="project-name">{p.name}</div>
+                <div className="project-name">
+                  {p.name}
+                  {p.link && (
+                    <a href={p.link} target="_blank" rel="noopener noreferrer" style={{ marginLeft: '10px', color: 'inherit' }}>
+                      <i className="fas fa-external-link-alt" style={{ fontSize: '1rem' }}></i>
+                    </a>
+                  )}
+                </div>
               </div>
               <div className="project-desc">{p.desc}</div>
               <div className="project-tech">
